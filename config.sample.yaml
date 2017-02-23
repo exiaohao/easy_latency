@@ -1,0 +1,18 @@
+system:
+    delay: 30
+    region: 'your region'
+
+influx_db:
+    host: ''
+    port: 8086
+    user: ''
+    password: ''
+    database: ''
+
+monitor:
+    ping_times: 3
+    ping:
+        114DNS: 114.114.114.114
+        AliDNS: 223.5.5.5
+        BAIXING: 222.66.5.165
+        TIMEOUT: 1.1.1.1

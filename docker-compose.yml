@@ -1,0 +1,22 @@
+version: '2'
+services: 
+    easy_latency:
+        build: .
+        command: ["python", "easy_ping.py"]
+        volumes:
+            - .:/code
+        networks:
+            - easy_test
+
+networks:
+    easy_test:
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.30.16.0/24
+                  dns:
+                    - 119.29.29.29
+                    - 114.114.114.114
+                    - 223.5.5.5
+                  gateway: 172.30.16.1
