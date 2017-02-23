@@ -57,7 +57,7 @@ def make_fetch(url, method=FETCH_GET, params=None):
                 url=url,
                 params=params,
             )
-            print('Done make GET')
+
         elif method == FETCH_POST:
             req = requests.post(
                 url=url,
@@ -120,14 +120,13 @@ def run_server(config):
                 logger.exception(ex)
 
             for i, fetch_task in enumerate(result['list']):
-                fetch_test(
-                    order_id=fetch_task['order_id'],
-                    url= 'http://' + fetch_task['order_url'],
-                    check_stamp_text=fetch_tasks.get('fetch_check_stamp')
-                )
-                if i > 10:
-                    break
-    
+                workers = [gevent.spawn(
+                    fetch_test,
+                    fetch_task['order_id'],
+                    'http://' + fetch_task['order_url'],
+                    fetch_tasks.get('fetch_check_stamp')
+                )]
+
     if workers:
         gevent.joinall(workers)
 
